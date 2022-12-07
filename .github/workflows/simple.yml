@@ -1,16 +1,11 @@
-# This is a basic workflow to help you get started with Actions
-
 name: KASMCI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
       inputs:
         CUSTOM_URL:
@@ -21,12 +16,13 @@ on:
           
 jobs:
   KASM:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     
     steps:
       - name: primary configurations.
         run: |
           sudo apt-get update -y
+          sudo docker pull kasmweb/chrome:1.12.0
           sudo docker run --rm -it --shm-size=512m -p 6901:6901 -e VNC_PW=${{ github.event.inputs.KASM_PASSWORD }} kasmweb/chrome:1.12.0 
       - name: Getting you ready.
         run: |
