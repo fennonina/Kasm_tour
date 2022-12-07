@@ -1,0 +1,54 @@
+# This is a basic workflow to help you get started with Actions
+
+name: KASMCI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+      inputs:
+        CUSTOM_URL:
+          description: ' Enter a custom URL | jhons-pigeon '
+          required: true
+        KASM_PASSWORD:
+          description: ' Enter a password a least 4-digit '
+          
+jobs:
+  KASM:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: primary configurations.
+        run: |
+          sudo apt-get update -y
+          sudo docker run --rm -it --shm-size=512m -p 6901:6901 -e VNC_PW=${{ github.event.inputs.KASM_PASSWORD }} kasmweb/chrome:1.12.0 
+      - name: Getting you ready.
+        run: |
+          sudo npm install -g localtunnel &>dev/null & sleep 7
+          sudo export RNDM=$RANDOM
+          sudo export customurl=${{ github.event.inputs.CUSTOM_URL }}
+          sudo export LTURL=$RNDM-$customurl
+          sleep 2
+          echo ----------------------------------------------------
+          sudo lt -s $LTURL -p 6901 
+          echo ----------------------------------------------------
+          echo
+          echo
+          echo    USERNAME : kasm_user
+          echo    PASSWORD : ${{ github.event.inputs.KASM_PASSWORD }}
+          echo 
+          echo    URL: https://$LTURL.loca.lt
+          echo
+          echo
+          echo ----------------------------------------------------
+          sudo lt -s $LTURL -p 6901 
+          sleep 6h
+          
+      
+        
