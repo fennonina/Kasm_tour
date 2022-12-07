@@ -23,7 +23,7 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo docker pull kasmweb/chrome:1.12.0
-          sudo docker run --rm -it --shm-size=512m -p 6901:6901 -e VNC_PW=${{ github.event.inputs.KASM_PASSWORD }} kasmweb/chrome:1.12.0 
+          sudo docker run --rm --shm-size=512m -p 6901:6901 -e VNC_PW=${{ github.event.inputs.KASM_PASSWORD }} kasmweb/chrome:1.12.0 
       - name: Getting you ready.
         run: |
           sudo npm install -g localtunnel &>dev/null & sleep 7
