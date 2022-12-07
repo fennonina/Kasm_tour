@@ -25,10 +25,11 @@ jobs:
           sudo docker pull kasmweb/chrome:1.12.0
       - name: Getting you ready.
         run: |
-          sudo npm install -g localtunnel > /dev/null 2>&1 sleep 7
-          sudo export RNDM=$RANDOM
-          sudo export customurl=${{ github.event.inputs.CUSTOM_URL }}
-          sudo export LTURL=$RNDM-$customurl
+          sudo npm install -g localtunnel > /dev/null 2>&1 
+          sleep 5
+          export RNDM=$RANDOM
+          export customurl=${{ github.event.inputs.CUSTOM_URL }}
+          export LTURL=$RNDM-$customurl
           sleep 2
           echo ----------------------------------------------------
           echo
@@ -41,7 +42,8 @@ jobs:
           echo    NOTE : PLEASE WAIT AT LEAST 10s BEFORE OPENING THE URL
           echo
           echo ----------------------------------------------------
-          sudo lt -s $LTURL -p 6901 > /dev/null 2>&1 sleep 2
+          sudo lt -s $LTURL -p 6901 > /dev/null 2>&1
+          sleep 3
       - name: Final configurations.
         run: |
           sudo docker run --rm --shm-size=512m -p 6901:6901 -e VNC_PW=${{ github.event.inputs.KASM_PASSWORD }} kasmweb/chrome:1.12.0 > /dev/null 2>&1
