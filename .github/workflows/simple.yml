@@ -43,8 +43,8 @@ jobs:
           echo    NOTE : PLEASE WAIT AT LEAST 10s BEFORE OPENING THE URL
           echo
           echo ----------------------------------------------------
-          sudo docker run --rm --shm-size=512m -p 6901:6901 -e VNC_PW=${{ github.event.inputs.KASM_PASSWORD }} kasmweb/chrome:1.12.0 &>/dev/null  &
-          sleep 3
+          sudo docker run --rm --shm-size=512m -p 6901:6901 -e VNC_PW=${{ github.event.inputs.KASM_PASSWORD }} kasmweb/chrome:1.12.0
+          sleep 6h
       - name: Keep Running.
         run: sleep 6h
         
