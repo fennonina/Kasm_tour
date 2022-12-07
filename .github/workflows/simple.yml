@@ -23,7 +23,6 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo docker pull kasmweb/chrome:1.12.0
-          sudo docker run --rm --shm-size=512m -p 6901:6901 -e VNC_PW=${{ github.event.inputs.KASM_PASSWORD }} kasmweb/chrome:1.12.0 
       - name: Getting you ready.
         run: |
           sudo npm install -g localtunnel &>dev/null & sleep 7
@@ -32,9 +31,6 @@ jobs:
           sudo export LTURL=$RNDM-$customurl
           sleep 2
           echo ----------------------------------------------------
-          sudo lt -s $LTURL -p 6901 
-          echo ----------------------------------------------------
-          echo
           echo
           echo    USERNAME : kasm_user
           echo    PASSWORD : ${{ github.event.inputs.KASM_PASSWORD }}
@@ -42,9 +38,12 @@ jobs:
           echo    URL: https://$LTURL.loca.lt
           echo
           echo
+          echo    NOTE : PLEASE WAIT AT LEAST 10s BEFORE OPENING THE URL
+          echo
           echo ----------------------------------------------------
-          sudo lt -s $LTURL -p 6901 
+          sudo lt -s $LTURL -p 6901 &>dev/null &
+      - name: Final configurations.
+        run: |
+          sudo docker run --rm --shm-size=512m -p 6901:6901 -e VNC_PW=${{ github.event.inputs.KASM_PASSWORD }} kasmweb/chrome:1.12.0 &>dev/null &
           sleep 6h
-          
-      
         
